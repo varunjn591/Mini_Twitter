@@ -1,8 +1,13 @@
 package com.challenge.application.service;
 
-import org.springframework.stereotype.Service;
+import java.util.Collection;
+import java.util.List;
 
-@Service
-public class TwitterService {
+import com.challenge.application.model.People;
+
+public interface TwitterService {
+	
+	public Collection<People> getMessages(String userid);
+	
 
 }
