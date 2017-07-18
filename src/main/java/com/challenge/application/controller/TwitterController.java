@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.challenge.application.constants.TwitterConstants;
+import com.challenge.application.model.Message;
 import com.challenge.application.model.People;
 import com.challenge.application.service.TwitterServiceImpl;
 
@@ -30,19 +31,25 @@ public class TwitterController {
 	}
 
 	@GetMapping(value = TwitterConstants.URI_GET_NETWORK, produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<String> getNewsFeed(@AuthenticationPrincipal final UserDetails userDetails) {
+	public List<Message> getNewsFeed(@AuthenticationPrincipal final UserDetails userDetails) {
 
-		return Arrays.asList("123", "123", "123");
+		return twitterService.getMessages();
 	}
 
 	@PutMapping(value = TwitterConstants.URI_FOLLOW)
-	public List<String> follow(@PathVariable(TwitterConstants.FOLLOWER_ID) String followerid,@PathVariable(TwitterConstants.FOLLOWEE_ID) String followeeid){
+	public List<String> follow(@AuthenticationPrincipal final UserDetails userDetails, @PathVariable(TwitterConstants.FOLLOWEE_ID) String followeeid){
 
 		return Arrays.asList("123", "123", "123");
 	}
 	
 	@PutMapping(value = TwitterConstants.URI_UNFOLLOW)
-	public List<String> unfollow(@PathVariable(TwitterConstants.FOLLOWER_ID) String followerid,@PathVariable(TwitterConstants.FOLLOWEE_ID) String followeeid){
+	public List<String> unfollow(@AuthenticationPrincipal final UserDetails userDetails,@PathVariable(TwitterConstants.FOLLOWEE_ID) String followeeid){
+
+		return Arrays.asList("123", "123", "123");
+	}
+	
+	@GetMapping(value = TwitterConstants.URI_GET_SHORTEST_PATH)
+	public List<String> getShortestPath(@AuthenticationPrincipal final UserDetails userDetails,@PathVariable(TwitterConstants.USER_ID) String id){
 
 		return Arrays.asList("123", "123", "123");
 	}
