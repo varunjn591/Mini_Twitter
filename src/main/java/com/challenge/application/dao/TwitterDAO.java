@@ -1,22 +1,25 @@
 package com.challenge.application.dao;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 import com.challenge.application.model.Message;
+import com.challenge.application.model.Network;
 import com.challenge.application.model.People;
 
 public interface TwitterDAO {
 	
-	public Collection<People> getNewsFeed(String id);
+	public List<Message> getNewsFeed(String user);
 	
-	public List<Message> getMessages();
+	public List<Message> getMyPosts(String user);
 	
-	public void getMyNetwork();
+	public List<People> getMyFollowers(String user);
 	
-	public void follow();
+	public List<People> getMyFollowees(String user);
 	
-	public void unfollow();
+	public void follow(String user, String followee);
+	
+	public void unfollow(String user, String followee);
+	
+	public List<Network> getAllNetwork();
 
 }

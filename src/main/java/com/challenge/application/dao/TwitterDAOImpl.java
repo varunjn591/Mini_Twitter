@@ -1,8 +1,6 @@
 package com.challenge.application.dao;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -13,45 +11,66 @@ import org.springframework.stereotype.Repository;
 
 import com.challenge.application.constants.SQLQueries;
 import com.challenge.application.model.Message;
+import com.challenge.application.model.Network;
 import com.challenge.application.model.People;
 
 @Repository
-public class TwitterDAOImpl implements TwitterDAO{
-	
-	@Autowired
-	private NamedParameterJdbcTemplate jdbcTemplate;
+public class TwitterDAOImpl implements TwitterDAO {
 
-	@Override
-	public Collection<People> getNewsFeed(String userId) {
-		String sql = "SELECT * FROM PEOPLE";//(ID,NAME) VALUES (:id,:name)";
-		SqlParameterSource namedParameters = new MapSqlParameterSource("id", userId);
-		
-		return jdbcTemplate.query(sql , new BeanPropertyRowMapper<People>(People.class));
-	}
-	
-	@Override
-	public List<Message> getMessages() {
-		// TODO Auto-generated method stub
-		SqlParameterSource namedParameters = new MapSqlParameterSource("id", 1);
-		return jdbcTemplate.query(SQLQueries.NEWS_FEED_SQL, namedParameters,new BeanPropertyRowMapper<Message>(Message.class));
-	}
+    @Autowired
+    private NamedParameterJdbcTemplate jdbcTemplate;
 
-	@Override
-	public void getMyNetwork() {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public List<Message> getNewsFeed(String user) {
+	SqlParameterSource namedParameters = new MapSqlParameterSource("username", user);
+	int userId = jdbcTemplate.queryForObject(SQLQueries.USER_ID, namedParameters, Integer.class);
+	namedParameters = new MapSqlParameterSource("id", userId);
+	return jdbcTemplate.query(SQLQueries.NEWS_FEED_SQL, namedParameters, new BeanPropertyRowMapper<Message>(Message.class));
+    }
+    
+    @Override
+    public List<Message> getMyPosts(String user) {
+	SqlParameterSource namedParameters = new MapSqlParameterSource("username", user);
+	int userId = jdbcTemplate.queryForObject(SQLQueries.USER_ID, namedParameters, Integer.class);
+	namedParameters = new MapSqlParameterSource("id", userId);
+	return jdbcTemplate.query(SQLQueries.MY_POSTS_SQL, namedParameters, new BeanPropertyRowMapper<Message>(Message.class));
+    }
 
-	@Override
-	public void follow() {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public List<People> getMyFollowers(String user) {
+	SqlParameterSource namedParameters = new MapSqlParameterSource("username", user);
+	int userId = jdbcTemplate.queryForObject(SQLQueries.USER_ID, namedParameters, Integer.class);
+	namedParameters = new MapSqlParameterSource("id", userId);
+	return jdbcTemplate.query(SQLQueries.MY_FOLLOWERS, namedParameters,new BeanPropertyRowMapper<People>(People.class));
+    }
 
-	@Override
-	public void unfollow() {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public List<People> getMyFollowees(String user) {
+	SqlParameterSource namedParameters = new MapSqlParameterSource("username", user);
+	int userId = jdbcTemplate.queryForObject(SQLQueries.USER_ID, namedParameters, Integer.class);
+	namedParameters = new MapSqlParameterSource("id", userId);
+	return jdbcTemplate.query(SQLQueries.MY_FOLLOWEES, namedParameters,new BeanPropertyRowMapper<People>(People.class));
+    }
+    
+    @Override
+    public void follow(String user, String followee) {
+	// TODO Auto-generated method stub
+	SqlParameterSource namedParameters = new MapSqlParameterSource("id", user).addValue("followee", followee);
+	jdbcTemplate.queryForList(SQLQueries.FOLLOW_SQL, namedParameters);
+
+    }
+
+    @Override
+    public void unfollow(String user, String followee) {
+	// TODO Auto-generated method stub
+	SqlParameterSource namedParameters = new MapSqlParameterSource("id", user).addValue("followee", followee);
+	jdbcTemplate.queryForList(SQLQueries.UNFOLLOW_SQL, namedParameters);
+    }
+
+    @Override
+    public List<Network> getAllNetwork() {
+	// TODO Auto-generated method stub
+	return jdbcTemplate.query(SQLQueries.NEWS_FEED_SQL, new BeanPropertyRowMapper<Network>(Network.class));
+    }
 
 }

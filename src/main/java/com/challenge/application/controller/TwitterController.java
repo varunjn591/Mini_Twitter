@@ -1,9 +1,7 @@
 package com.challenge.application.controller;
 
-import java.util.Arrays;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,42 +13,30 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.challenge.application.constants.TwitterConstants;
 import com.challenge.application.model.Message;
-import com.challenge.application.model.People;
-import com.challenge.application.service.TwitterServiceImpl;
+import com.challenge.application.response.BaseResponse;
+import com.challenge.application.response.TwitterResponse;
+
 
 @RestController
 @RequestMapping("/r/v1")
-public class TwitterController {
-
-	@Autowired
-	TwitterServiceImpl twitterService;
-
+public interface TwitterController {
+	
+	@GetMapping(TwitterConstants.PING_URL)
+	public String ping(); 
+	
 	@GetMapping(value = TwitterConstants.URI_GET_NEWS_FEED, produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<People> message(@AuthenticationPrincipal final UserDetails userDetails) {
-		return (List<People>) twitterService.getMessages(userDetails.getUsername());
-	}
-
-	@GetMapping(value = TwitterConstants.URI_GET_NETWORK, produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<Message> getNewsFeed(@AuthenticationPrincipal final UserDetails userDetails) {
-
-		return twitterService.getMessages();
-	}
+	public TwitterResponse getNewsFeed(@AuthenticationPrincipal final UserDetails userDetails);
+	
+	@GetMapping(value = TwitterConstants.URI_GET_MY_NETWORK, produces = MediaType.APPLICATION_JSON_VALUE)
+	public TwitterResponse getMyNetwork(@AuthenticationPrincipal final UserDetails userDetails);
 
 	@PutMapping(value = TwitterConstants.URI_FOLLOW)
-	public List<String> follow(@AuthenticationPrincipal final UserDetails userDetails, @PathVariable(TwitterConstants.FOLLOWEE_ID) String followeeid){
-
-		return Arrays.asList("123", "123", "123");
-	}
+	public BaseResponse follow(@AuthenticationPrincipal final UserDetails userDetails, @PathVariable(TwitterConstants.FOLLOWEE) String followee);
 	
 	@PutMapping(value = TwitterConstants.URI_UNFOLLOW)
-	public List<String> unfollow(@AuthenticationPrincipal final UserDetails userDetails,@PathVariable(TwitterConstants.FOLLOWEE_ID) String followeeid){
-
-		return Arrays.asList("123", "123", "123");
-	}
+	public BaseResponse unfollow(@AuthenticationPrincipal final UserDetails userDetails,@PathVariable(TwitterConstants.FOLLOWEE) String followee);
 	
-	@GetMapping(value = TwitterConstants.URI_GET_SHORTEST_PATH)
-	public List<String> getShortestPath(@AuthenticationPrincipal final UserDetails userDetails,@PathVariable(TwitterConstants.USER_ID) String id){
+	@GetMapping(value = TwitterConstants.URI_GET_SHORTEST_PATH, produces = MediaType.TEXT_PLAIN_VALUE)
+	public BaseResponse getShortestPath(@AuthenticationPrincipal final UserDetails userDetails,@PathVariable(TwitterConstants.FRIEND) String friend);
 
-		return Arrays.asList("123", "123", "123");
-	}
 }
