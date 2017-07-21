@@ -2,11 +2,13 @@ package com.challenge.application.service;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.challenge.application.dao.TwitterDAO;
 import com.challenge.application.exception.TwitterException;
+import com.challenge.application.exception.handler.TwitterExceptionHandler;
 import com.challenge.application.model.Network;
 import com.challenge.application.model.People;
 import com.challenge.application.response.BaseResponse;
@@ -21,6 +23,8 @@ public class TwitterServiceImpl implements TwitterService {
     @Autowired
     RouteFinder routeFinder;
 
+    private static final Logger logger = Logger.getLogger(TwitterServiceImpl.class);
+    
     @Override
     public TwitterResponse getNewsFeed(String user) throws TwitterException{
 	TwitterResponse response = new TwitterResponse();

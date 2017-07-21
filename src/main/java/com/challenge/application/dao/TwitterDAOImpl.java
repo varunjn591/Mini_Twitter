@@ -2,6 +2,7 @@ package com.challenge.application.dao;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import com.challenge.application.constants.SQLQueries;
 import com.challenge.application.exception.ErrorCode;
 import com.challenge.application.exception.TwitterException;
+import com.challenge.application.exception.handler.TwitterExceptionHandler;
 import com.challenge.application.model.Message;
 import com.challenge.application.model.Network;
 import com.challenge.application.model.People;
@@ -22,6 +24,8 @@ public class TwitterDAOImpl implements TwitterDAO {
 
     @Autowired
     private NamedParameterJdbcTemplate jdbcTemplate;
+    
+    private static final Logger logger = Logger.getLogger(TwitterExceptionHandler.class);
 
     @Override
     public int getUserId(String user) throws TwitterException {
