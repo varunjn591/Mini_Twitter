@@ -1,7 +1,5 @@
 package com.challenge.application.controller;
 
-import java.util.List;
-
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.challenge.application.constants.TwitterConstants;
-import com.challenge.application.model.Message;
+import com.challenge.application.exception.TwitterException;
 import com.challenge.application.response.BaseResponse;
 import com.challenge.application.response.TwitterResponse;
 
@@ -25,18 +23,18 @@ public interface TwitterController {
 	public String ping(); 
 	
 	@GetMapping(value = TwitterConstants.URI_GET_NEWS_FEED, produces = MediaType.APPLICATION_JSON_VALUE)
-	public TwitterResponse getNewsFeed(@AuthenticationPrincipal final UserDetails userDetails);
+	public TwitterResponse getNewsFeed(@AuthenticationPrincipal final UserDetails userDetails) throws TwitterException;
 	
 	@GetMapping(value = TwitterConstants.URI_GET_MY_NETWORK, produces = MediaType.APPLICATION_JSON_VALUE)
-	public TwitterResponse getMyNetwork(@AuthenticationPrincipal final UserDetails userDetails);
+	public TwitterResponse getMyNetwork(@AuthenticationPrincipal final UserDetails userDetails) throws TwitterException;
 
 	@PutMapping(value = TwitterConstants.URI_FOLLOW)
-	public BaseResponse follow(@AuthenticationPrincipal final UserDetails userDetails, @PathVariable(TwitterConstants.FOLLOWEE) String followee);
+	public BaseResponse follow(@AuthenticationPrincipal final UserDetails userDetails, @PathVariable(TwitterConstants.FOLLOWEE) String followee) throws TwitterException;
 	
 	@PutMapping(value = TwitterConstants.URI_UNFOLLOW)
-	public BaseResponse unfollow(@AuthenticationPrincipal final UserDetails userDetails,@PathVariable(TwitterConstants.FOLLOWEE) String followee);
+	public BaseResponse unfollow(@AuthenticationPrincipal final UserDetails userDetails,@PathVariable(TwitterConstants.FOLLOWEE) String followee) throws TwitterException;
 	
-	@GetMapping(value = TwitterConstants.URI_GET_SHORTEST_PATH, produces = MediaType.TEXT_PLAIN_VALUE)
-	public BaseResponse getShortestPath(@AuthenticationPrincipal final UserDetails userDetails,@PathVariable(TwitterConstants.FRIEND) String friend);
+	@GetMapping(value = TwitterConstants.URI_GET_SHORTEST_PATH, produces = MediaType.APPLICATION_JSON_VALUE)
+	public BaseResponse getShortestPath(@AuthenticationPrincipal final UserDetails userDetails,@PathVariable(TwitterConstants.FRIEND) String friend) throws TwitterException;
 
 }
