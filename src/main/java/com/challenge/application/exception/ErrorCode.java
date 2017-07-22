@@ -1,9 +1,9 @@
 package com.challenge.application.exception;
 
 public enum ErrorCode {
-    	
-    	INVALID_USER("101", "User Name is missing/invalid"), DATABASE_NOT_FOUND("102","User does not exist in the database"), 
-	NO_CONNECTION("103","There is no feasible path");
+
+	INVALID_USER("101", "User Name is missing/invalid"), DATABASE_NOT_FOUND("102", "User does not exist in the database"), NO_CONNECTION("103", "There is no feasible path"), DATABASE_ERROR("104",
+			"Sorry something went wrong could not fetch data from database");
 
 	private final String code;
 	private final String description;

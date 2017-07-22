@@ -11,17 +11,17 @@ import com.challenge.application.response.BaseResponse;
 
 @ControllerAdvice
 public class TwitterExceptionHandler {
-    
-    private static final Logger logger = Logger.getLogger(TwitterExceptionHandler.class);
 
-    @ExceptionHandler(TwitterException.class)
-    @ResponseBody
-    public BaseResponse handleException(TwitterException twitterException){
-	logger.info("Twitter Exception caused by " + twitterException.getMessage());
-	BaseResponse response = new BaseResponse();
-	ErrorCode errorCode = twitterException.getErrorCode();
-	response.setErrorCode(errorCode);
-	return response;
-    }
-    
+	private static final Logger logger = Logger.getLogger(TwitterExceptionHandler.class);
+
+	@ExceptionHandler(TwitterException.class)
+	@ResponseBody
+	public BaseResponse handleException(TwitterException twitterException) {
+		logger.info("Twitter Exception caused by " + twitterException.getMessage());
+		BaseResponse response = new BaseResponse();
+		ErrorCode errorCode = twitterException.getErrorCode();
+		response.setErrorCode(errorCode);
+		return response;
+	}
+
 }

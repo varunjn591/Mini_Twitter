@@ -7,7 +7,7 @@ public final class TwitterConstants {
 	public static final String PING_URL = "/ping";
 	public static final String URI_GET_NEWS_FEED = "/newsfeed";
 	public static final String URI_GET_MY_NETWORK = "/mynetwork";
-	public static final String URI_FOLLOW = "/follow/{followee}/";
+	public static final String URI_FOLLOW = "/follow/{followee}";
 	public static final String URI_UNFOLLOW = "/unfollow/{followee}";
 	public static final String URI_GET_SHORTEST_PATH = "/shortestpath/{friend}";
 	public static final String USER = "user";
