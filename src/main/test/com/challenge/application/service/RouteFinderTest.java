@@ -15,34 +15,34 @@ import com.challenge.application.model.Network;
 
 @RunWith(SpringRunner.class)
 public class RouteFinderTest {
-	
+
 	@InjectMocks
 	RouteFinder routeFinder;
-	
-	@Test(expected=TwitterException.class)
-	public void getShortestPath_NoSourceInGraph_Exception() throws Exception{
+
+	@Test(expected = TwitterException.class)
+	public void getShortestPath_NoSourceInGraph_Exception() throws Exception {
 		List<Network> networks = new ArrayList<>();
 		Network networkl = new Network();
 		networkl.setFollowee(1);
 		networkl.setFollower(2);
 		networks.add(networkl);
 		int result = routeFinder.shortestPath(networks, 3, 1);
-		assertEquals(result,1);
+		assertEquals(result, 1);
 	}
-	
+
 	@Test
-	public void getShortestPath_Normal_ResultWithDistance() throws Exception{
+	public void getShortestPath_Normal_ResultWithDistance() throws Exception {
 		List<Network> networks = new ArrayList<>();
 		Network networkl = new Network();
 		networkl.setFollowee(2);
 		networkl.setFollower(1);
 		networks.add(networkl);
 		int result = routeFinder.shortestPath(networks, 1, 2);
-		assertEquals(result,1);
+		assertEquals(result, 1);
 	}
-	
-	@Test(expected=TwitterException.class)
-	public void getShortestPath_NoDestination_Exception() throws Exception{
+
+	@Test(expected = TwitterException.class)
+	public void getShortestPath_NoDestination_Exception() throws Exception {
 		List<Network> networks = new ArrayList<>();
 		Network networkl = new Network();
 		networkl.setFollowee(2);
@@ -50,21 +50,20 @@ public class RouteFinderTest {
 		networks.add(networkl);
 		routeFinder.shortestPath(networks, 1, 3);
 	}
-	
+
 	@Test
-	public void getShortestPath_SourceAndDestinationSame_ResultTo0() throws Exception{
+	public void getShortestPath_SourceAndDestinationSame_ResultTo0() throws Exception {
 		List<Network> networks = new ArrayList<>();
 		Network networkl = new Network();
 		networkl.setFollowee(2);
 		networkl.setFollower(1);
 		networks.add(networkl);
 		int result = routeFinder.shortestPath(networks, 1, 1);
-		assertEquals(0,result);
+		assertEquals(0, result);
 	}
-	
-	
+
 	@Test
-	public void getShortestPath_NodeDistanceByTwo_ResultTo2() throws Exception{
+	public void getShortestPath_NodeDistanceByTwo_ResultTo2() throws Exception {
 		List<Network> networks = new ArrayList<>();
 		Network networkl = new Network();
 		networkl.setFollowee(2);
@@ -75,7 +74,7 @@ public class RouteFinderTest {
 		network2.setFollower(2);
 		networks.add(network2);
 		int result = routeFinder.shortestPath(networks, 1, 3);
-		assertEquals(result,2);
+		assertEquals(result, 2);
 	}
 
 }

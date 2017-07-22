@@ -45,12 +45,12 @@ public class TwitterServiceImpl implements TwitterService {
 		}
 		TwitterResponse response = new TwitterResponse();
 		List<People> followers = twitterDAO.getMyFollowers(user);
-		if(followers.isEmpty() || followers == null){
+		if (followers.isEmpty()) {
 			logger.info("No followers were found");
 		}
 		response.setFollowers(followers);
 		List<People> followees = twitterDAO.getMyFollowees(user);
-		if(followers.isEmpty() || followers == null){
+		if (followers.isEmpty()) {
 			logger.info("No followees were found");
 		}
 		response.setFollowees(followees);
@@ -104,8 +104,8 @@ public class TwitterServiceImpl implements TwitterService {
 		List<Network> followers = twitterDAO.getAllNetwork();
 		int userId = twitterDAO.getUserId(user);
 		int friendId = twitterDAO.getUserId(friend);
-		
-		if(friendId == 0 || userId == 0){
+
+		if (friendId == 0 || userId == 0) {
 			logger.info("invalid userId/friendId");
 			throw new TwitterException(ErrorCode.INVALID_USER);
 		}

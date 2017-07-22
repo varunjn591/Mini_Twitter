@@ -72,7 +72,7 @@ public class TwitterControllerImplTest {
 		follower.setId(1);
 		follower.setName("ABC");
 		follower.setHandle("abc");
-		
+
 		List<People> followees = new ArrayList<>();
 		People followee = new People();
 		followee.setId(1);
@@ -113,15 +113,15 @@ public class TwitterControllerImplTest {
 		when(userDetails.getUsername()).thenReturn(null);
 		twitterController.unfollow(userDetails, "");
 	}
-	
+
 	@Test
 	public void getShortestPath_Normal_Result() throws TwitterException {
 		BaseResponse responseMock = new BaseResponse();
 		responseMock.setMessage("Shortest Path is 10");
-		when(twitterService.getShortestPath(anyString(),anyString())).thenReturn(responseMock);
+		when(twitterService.getShortestPath(anyString(), anyString())).thenReturn(responseMock);
 		when(userDetails.getUsername()).thenReturn("Test");
 
-		BaseResponse twitterResponse = twitterController.getShortestPath(userDetails,"Destination Friend");
+		BaseResponse twitterResponse = twitterController.getShortestPath(userDetails, "Destination Friend");
 		assertEquals("Shortest Path is 10", twitterResponse.getMessage());
 	}
 

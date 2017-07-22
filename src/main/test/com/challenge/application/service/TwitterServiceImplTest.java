@@ -22,31 +22,31 @@ import com.challenge.application.response.TwitterResponse;
 
 @RunWith(SpringRunner.class)
 public class TwitterServiceImplTest {
-	
+
 	@InjectMocks
 	TwitterServiceImpl twitterService;
 
 	@Mock
 	TwitterDAO twitterDAO;
-	
+
 	@Mock
 	RouteFinder routeFinder;
-	
-	@Test(expected=TwitterException.class)
+
+	@Test(expected = TwitterException.class)
 	public void getNewsFeed_NoUser_Exception() throws Exception {
 		twitterService.getNewsFeed("");
-		
+
 	}
 
-	@Test(expected=TwitterException.class)
-	public void getNewsFeed_NoAvailableUser_Exception() throws Exception{
+	@Test(expected = TwitterException.class)
+	public void getNewsFeed_NoAvailableUser_Exception() throws Exception {
 		when(twitterDAO.getNewsFeed(anyString())).thenThrow(new TwitterException(ErrorCode.INVALID_USER));
 		when(twitterDAO.getNewsFeed(anyString())).thenThrow(new TwitterException(ErrorCode.INVALID_USER));
 		twitterService.getNewsFeed("AHJ");
 	}
 
 	@Test
-	public void getNewsFeed_CorrectUser_Result() throws Exception{
+	public void getNewsFeed_CorrectUser_Result() throws Exception {
 		when(twitterDAO.getUserId(anyString())).thenReturn(1);
 		List<Message> myPosts = new ArrayList<>();
 		Message message1 = new Message();
@@ -62,25 +62,24 @@ public class TwitterServiceImplTest {
 		newsfeed.add(message3);
 		when(twitterDAO.getMyPosts(anyString())).thenReturn(myPosts);
 		when(twitterDAO.getNewsFeed(anyString())).thenReturn(newsfeed);
-		assertEquals("Test Message My Post 1",twitterService.getNewsFeed("Test").getMyPosts().get(0).getMessages());
-		assertEquals("Test Message My Post 1",twitterService.getNewsFeed("Test").getNewsfeed().get(0).getMessages());
+		assertEquals("Test Message My Post 1", twitterService.getNewsFeed("Test").getMyPosts().get(0).getMessages());
+		assertEquals("Test Message My Post 1", twitterService.getNewsFeed("Test").getNewsfeed().get(0).getMessages());
 	}
 
-
-	@Test(expected=TwitterException.class)
-	public void getMyNetwork_NoUser_Exception() throws Exception{
+	@Test(expected = TwitterException.class)
+	public void getMyNetwork_NoUser_Exception() throws Exception {
 		twitterService.getNewsFeed("");
 	}
 
 	@Test
-	public void getMyNetwork_CorrectUser_Result() throws Exception{
+	public void getMyNetwork_CorrectUser_Result() throws Exception {
 		when(twitterDAO.getUserId(anyString())).thenReturn(1);
 		List<People> followers = new ArrayList<>();
 		People follower = new People();
 		follower.setId(1);
 		follower.setName("ABC");
 		follower.setHandle("abc");
-		
+
 		List<People> followees = new ArrayList<>();
 		People followee = new People();
 		followee.setId(1);
@@ -94,22 +93,21 @@ public class TwitterServiceImplTest {
 		twitterResponseMock.setFollowees(followees);
 		when(twitterDAO.getMyFollowees(anyString())).thenReturn(followees);
 		when(twitterDAO.getMyFollowers(anyString())).thenReturn(followers);
-		assertEquals("ABC",twitterService.getMyNetwork("Test").getFollowers().get(0).getName());
-		assertEquals("DEF",twitterService.getMyNetwork("Test").getFollowees().get(0).getName());
+		assertEquals("ABC", twitterService.getMyNetwork("Test").getFollowers().get(0).getName());
+		assertEquals("DEF", twitterService.getMyNetwork("Test").getFollowees().get(0).getName());
 	}
 
-	@Test(expected=TwitterException.class)
-	public void getMyNetwork_NoAvailableUser_Exception() throws Exception{
+	@Test(expected = TwitterException.class)
+	public void getMyNetwork_NoAvailableUser_Exception() throws Exception {
 		when(twitterDAO.getNewsFeed(anyString())).thenThrow(new TwitterException(ErrorCode.INVALID_USER));
 		when(twitterDAO.getNewsFeed(anyString())).thenThrow(new TwitterException(ErrorCode.INVALID_USER));
 		twitterService.getNewsFeed("AHJ");
 	}
 
-
-	@Test(expected=TwitterException.class)
-	public void getAllNetwork_NoAvailableUser_Exception() throws Exception{
+	@Test(expected = TwitterException.class)
+	public void getAllNetwork_NoAvailableUser_Exception() throws Exception {
 		List<Network> networks = new ArrayList<>();
-		
+
 		Network n1 = new Network();
 		n1.setFollowee(1);
 		n1.setFollower(2);

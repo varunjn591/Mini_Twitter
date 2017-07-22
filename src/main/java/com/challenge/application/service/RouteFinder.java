@@ -23,10 +23,10 @@ public class RouteFinder {
 
 	public int shortestPath(List<Network> networks, int root, int destination) throws TwitterException {
 
-		if(root < 1 || destination < 1){
+		if (root < 1 || destination < 1) {
 			throw new TwitterException(ErrorCode.INVALID_USER);
 		}
-		
+
 		if (root == destination)
 			return 0;
 
@@ -54,7 +54,7 @@ public class RouteFinder {
 
 		/** Running BFS on graph **/
 		Queue<Node> queue = new LinkedList<>();
-		if(graph.get(root) == null){
+		if (graph.get(root) == null) {
 			throw new TwitterException(ErrorCode.INVALID_USER);
 		}
 		Node curr = graph.get(root);

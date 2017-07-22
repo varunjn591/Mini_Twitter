@@ -28,7 +28,7 @@ public class TwitterControllerImpl implements TwitterController {
 	}
 
 	public TwitterResponse getNewsFeed(@AuthenticationPrincipal final UserDetails userDetails) throws TwitterException {
-		if(userDetails.getUsername() == null || "".equals(userDetails.getUsername())){
+		if (userDetails.getUsername() == null || "".equals(userDetails.getUsername())) {
 			throw new TwitterException(ErrorCode.INVALID_USER);
 		}
 		logger.info("Getting News Feed");
@@ -36,7 +36,7 @@ public class TwitterControllerImpl implements TwitterController {
 	}
 
 	public TwitterResponse getMyNetwork(@AuthenticationPrincipal final UserDetails userDetails) throws TwitterException {
-		if(userDetails.getUsername() == null || "".equals(userDetails.getUsername())){
+		if (userDetails.getUsername() == null || "".equals(userDetails.getUsername())) {
 			throw new TwitterException(ErrorCode.INVALID_USER);
 		}
 		logger.info("Getting " + userDetails.getUsername() + " Network");
@@ -44,7 +44,7 @@ public class TwitterControllerImpl implements TwitterController {
 	}
 
 	public BaseResponse follow(@AuthenticationPrincipal final UserDetails userDetails, @PathVariable(TwitterConstants.FOLLOWEE) String followee) throws TwitterException {
-		if(userDetails.getUsername() == null || "".equals(followee) || followee == null){
+		if (userDetails.getUsername() == null || "".equals(followee) || followee == null) {
 			throw new TwitterException(ErrorCode.INVALID_USER);
 		}
 		logger.info("Making a request to Follow : " + followee);
@@ -52,7 +52,7 @@ public class TwitterControllerImpl implements TwitterController {
 	}
 
 	public BaseResponse unfollow(@AuthenticationPrincipal final UserDetails userDetails, @PathVariable(TwitterConstants.FOLLOWEE) String followee) throws TwitterException {
-		if(userDetails.getUsername() == null || "".equals(followee) || followee == null){
+		if (userDetails.getUsername() == null || "".equals(followee) || followee == null) {
 			throw new TwitterException(ErrorCode.INVALID_USER);
 		}
 		logger.info("Making a request to Unfollow : " + followee);
@@ -60,7 +60,7 @@ public class TwitterControllerImpl implements TwitterController {
 	}
 
 	public BaseResponse getShortestPath(@AuthenticationPrincipal final UserDetails userDetails, @PathVariable(TwitterConstants.FRIEND) String friend) throws TwitterException {
-		if(userDetails.getUsername() == null || "".equals(friend) || friend == null){
+		if (userDetails.getUsername() == null || "".equals(friend) || friend == null) {
 			throw new TwitterException(ErrorCode.INVALID_USER);
 		}
 		logger.info("Getting a shortest path between : " + userDetails.getUsername() + " and " + friend);
